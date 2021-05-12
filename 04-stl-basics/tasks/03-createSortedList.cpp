@@ -7,13 +7,15 @@
 
 std::list<int> createSortedList(std::vector<int>& vec)
 {
-    std::list<int> my_list{};
-
+    std::list<int> my_list(vec.begin(), vec.end());
+/*
     for(auto &a: vec)
     {
         my_list.push_back(a);
     }
-  
+  */
+
+
     my_list.sort();
     return my_list;
 }
