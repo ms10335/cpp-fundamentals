@@ -14,9 +14,9 @@ void foo(std::shared_ptr<int> num) {
 int main() {
     std::shared_ptr<int> number = std::make_shared<int>(10);
     // display the value under number pointer and use_count() of it
-    std::cout << " IN main() function " <<number << " " << *number << " " << " number of shared_pointer owners  : " << number.use_count() << '\n';
+    std::cout << "IN main() function " <<number << " " << *number << " " << " number of shared_pointer owners  : " << number.use_count() << '\n';
     foo(number);
     // display the value under number pointer and use_count() of it
-   std::cout << " IN main() function " << number << " " << *number << " " << " number of shared_pointer owners: " << number.use_count() << '\n';
+   std::cout << "IN main() function " << number << " " << *number << " " << " number of shared_pointer owners: " << number.use_count() << '\n';
     return 0;
 }
