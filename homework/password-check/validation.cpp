@@ -21,7 +21,7 @@ std::string getErrorMessage(ErrorCode er) {
     return res.at(er);
 }
 
-bool doPasswordsMatch(std::string password1, std::string password2) {
+bool doPasswordsMatch(const std::string& password1, const std::string& password2) {
     if (password1.size() != password2.size()) {
         return false;
     }
@@ -30,7 +30,7 @@ bool doPasswordsMatch(std::string password1, std::string password2) {
     }
     if (password1.size() == password2.size()) {
         auto pair = std::mismatch(password1.begin(), password1.end(), password2.begin());
-        return pair.first == password1.begin();
+        return (pair.first == password1.begin());
     }
     return false;
 }
@@ -56,21 +56,10 @@ ErrorCode checkPasswordRules(const std::string& password) {
     if (!(std::any_of(password.begin(), password.end(), [](char i) { return std::isdigit(i); }))) {
         return ErrorCode::PasswordNeedsAtLeastOneNumber;
     }
-    //check if a special char
-    //use regex to symplyfie
-    // const std::regex special_char_pattern("[^a-zA-Z0-9]+");
-    // const std::regex Capital_letter("[A-Z]+");
-    // std::smatch pass_match, capital_match;
-    // if (!(std::regex_search(password, pass_match, special_char_pattern))) {
-    //     return ErrorCode::PasswordNeedsAtLeastOneSpecialCharacter;
-    // }
-    // if (!(std::regex_search(password, capital_match, Capital_letter))) {
-    //     return ErrorCode::PasswordNeedsAtLeastOneUppercaseLetter;
-    // }
-    if(!(std::any_of(password.begin(),password.end(),[](char i){ return isalnum(i) == 0; }))) {
+    if (!(std::any_of(password.begin(), password.end(), [](char i) { return isalnum(i) == 0; }))) {
         return ErrorCode::PasswordNeedsAtLeastOneSpecialCharacter;
     }
-    if (std::none_of(password.begin(),password.end(),[](char i){ return isupper(i); })) {
+    if (std::none_of(password.begin(), password.end(), [](char i) { return isupper(i); })) {
         return ErrorCode::PasswordNeedsAtLeastOneUppercaseLetter;
     }
     //if all valid is passed
@@ -78,9 +67,8 @@ ErrorCode checkPasswordRules(const std::string& password) {
 }
 
 ErrorCode checkPassword(const std::string& password1, const std::string& password2) {
-    auto res = convertEnumsToString();
-    if (doPasswordsMatch(password1, password2)) {
+    if (!doPasswordsMatch(password1, password2)) {
         return ErrorCode::PasswordsDoNotMatch;
     }
-        return checkPasswordRules(password1);
+    return checkPasswordRules(password1);
 }
